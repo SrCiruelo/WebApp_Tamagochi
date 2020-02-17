@@ -1,1 +1,10 @@
-lQuDANBgkqhkiG9w0BAQsFADBMMSAwHgYDVQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMjETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UEAxMKR2xvYmFsU2lnbjAeFw0xNzA2MTUwMDAwNDJaFw0yMTEyMTUwMDAwNDJaMEIxCzAJBgNVBAYTAlVTMR4wHAYDVQQKExVHb29nbGUgVHJ1c3QgU2VydmljZXMxEzARBgNVBAMTCkdUUyBDQSAxTzEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDQGM9F1IvN05zkQO9+tN1pIRvJzzyOTHW5DzEZhD2ePCnvUA0Qk28FgICfKqC9EksC4T2fWBYk/jCfC3R3VZMdS/dN4ZKCEPZRrAzDsiKUDzRrmBBJ5wudgzndIMYcLe/RGGFl5yODIKgjEv/SJH/UL+dEaltN11BmsK+eQmMF++AcxGNhr59qM/9il71I2dN8FGfcddwuaej4bXhp0LcQBbjxMcI7
+<div class="col-xl-3 col-md-6 mb-4">
+  <div class="card border-0 shadow">
+    <img src={{this.image_Path}} class="card-img-top" alt="...">
+    <div class="card-body text-center">
+      <h5 class="card-title mb-0">{{this.nombre}}</h5>
+      <div class="card-text text-black-50">{{this.descripcion}}</div>
+      <button type="button" id="{{this.nombre}}_button"class="btn btn-success" onclick="dar_producto({{toString this.nombre}},{{toString tamagochi.nombre}})">Dar</button>
+    </div>
+  </div>
+</div>
