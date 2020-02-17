@@ -1,0 +1,12 @@
+"__v",_id,compras.0,compras.1,compras.2,estado,id,pass,role,tamagochis.0._id,tamagochis.0.hambre,tamagochis.0.limpieza,tamagochis.0.nombre,tamagochis.0.sueno
+0,5e25cffc5d8e3f2facd9a9c5,,,,true,test0,$2b$10$5dYLxspiPX3or1HsfgUcX.tUIM0v.KnS6qSb1N3ZWD2wSN3xILat6,USER_ROLE,,,,,
+0,5e25d0005d8e3f2facd9a9c6,,,,true,test1,$2b$10$4D5flK7dZrJG394DQIXApOPtSLbsK/RDP0C5rvyYhGGyHpzJDY4uO,USER_ROLE,,,,,
+0,5e25d0055d8e3f2facd9a9c7,,,,true,test2,$2b$10$j/aLpALfT0JI8qRgnXkfiurEXIBnwjDy.1ImfcvMWFFyWUMjDQh8e,USER_ROLE,,,,,
+0,5e25d0095d8e3f2facd9a9c8,,,,true,test3,$2b$10$ARqBp9FHyDD3I.XfxMb7/eEHgLNr4WlZe2Uv11b/4lRe1b6C9KZzS,USER_ROLE,,,,,
+0,5e25d00b5d8e3f2facd9a9c9,,,,true,test4,$2b$10$pbgq16E1cM4/AeyeC3IeTu5zZYhPGWw/CX29Bmi8SsWHduEJcRjwy,USER_ROLE,,,,,
+0,5e25d00e5d8e3f2facd9a9ca,,,,false,test5,$2b$10$Mi7tkbeRcsoDOZh7IqFTo.bXv6jgXwWrVZMVM3jlcNAzx0.eFA4k6,USER_ROLE,,,,,
+0,5e25dd3ef853931810fa46b9,,,,true,test8,$2b$10$YhC.WrD6ci3qBnBWAr12G.vbZE6j8uGKUoWwZ9n/Xnpq/nk4hzzEq,USER_ROLE,,,,,
+0,5e25dd54f853931810fa46ba,,,,true,test,$2b$10$tacKe4Uy8tspDqIufkJ22Os/AkElpr73YF35u./C7BVlgCSlgXbNm,USER_ROLE,,,,,
+0,5e25eb7b20bc392398bb7f69,,,,true,test10,$2b$10$uWjpLUatkfe0fC7x1B7VDeKS1T7rf4opFPEIhP9GUoTy4VMnIKtRq,USER_ROLE,,,,,
+15,5e3c0e2774092b38bc205ce1,Kiwi,Naranja,,true,Miguel,$2b$10$w3XMx5VJvATGtQddcTKexOQxlHuV2y6FIGrRlBvFarTHyJfl700UO,ADMIN_ROLE,5e413a3b174b975dc4a23e7a,340,10,Blues,170
+3,5e3d32f9fd87e15d58a2ee7f,Plátano,Kiwi,Naranja,true,ejemplo0,$2b$10$E9jljTxAz76Rg.U5iKxMlO9oJffyn0NIc4PP5jmJxFuQ2z0f8sX4S,USER_ROLE,,,,,

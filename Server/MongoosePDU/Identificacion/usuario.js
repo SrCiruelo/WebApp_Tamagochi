@@ -10,8 +10,8 @@ let roles_validos = {
     message: '{VALUE} no es un rol válido'
 }
 
-//Aquí definimos la pdu del usuario 
-//Dado la pdu depende de a que ruta mandemos la PDU y no del tipo 
+//Aquí definimos la pdu del usuario
+//Dado la pdu depende de a que ruta mandemos la PDU y no del tipo
 //El tipo ya no es un atributo necesario
 //se ha añadido un rol para poder logear como admin
 
@@ -36,6 +36,7 @@ let usuarioPDU = new Schema({
         default: true,
     },
     compras:{
+      //Añadir referencia
         type: [String],
     },
     tamagochis:{

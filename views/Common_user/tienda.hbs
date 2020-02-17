@@ -2,14 +2,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="./web_serverAPI.js"></script> 
+    <script src="./web_serverAPI.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <title>TAMAGOCHI</title>
+    <title>TIENDA</title>
 </head>
 
-<body onload="check_bought_products()">
+<body onload="load_tienda()">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <!-- Header -->
 <header class="bg-primary text-center py-5 mb-4">
@@ -20,11 +20,10 @@
 
 <!-- Page Content -->
 <div class="container">
-  <button type="button" id="dar_button"class="btn btn-success" onclick="dar_producto('Plátano','Blues')">Dar</button>
   <button type="button" id="crear_button"class="btn btn-success" onclick="CreateTamagochi('Blues')">Crear</button>
   <div class="row">
     {{# each productos}}
-      {{> producto}}
+      {{> producto_tienda}}
     {{/each}}
   </div>
   <!-- /.row -->

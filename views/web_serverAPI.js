@@ -17,7 +17,7 @@ var login_post = ()=>{
         }
     }
 
-    
+
     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xhr.send(params);
 }
@@ -30,9 +30,6 @@ var check_bought_products = ()=>{
         if(this.status == 200){
             let compras = JSON.parse(this.response).compras;
             productos = compras;
-            productos.forEach(element => {
-                set_bought(element);
-            });
             console.log(productos);
         }
         else{
@@ -43,6 +40,13 @@ var check_bought_products = ()=>{
     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xhr.send();
 }
+
+var set_bought_products = ()=>{
+  productos.forEach(element => {
+      set_bought(element);
+  });
+}
+
 var set_bought = (nombre)=>{
     var my_button = document.getElementById(nombre + "_button");
     my_button.classList.remove("btn-success")
@@ -120,4 +124,9 @@ var CreateTamagochi = (nombre)=>{
     }
     xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xhr.send(params);
+}
+
+var load_tienda = (nombre)=>{
+  check_bought_products();
+  set_bought_products();
 }

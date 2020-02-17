@@ -26,17 +26,19 @@ var productos = [];
 
 Producto.find({},(err,results)=>{
     results.forEach(element => {
-        let tmp_producto = {
-            image_Path: "/imagenes/"+element.nombre,
-            nombre    : element.nombre,
-            descripcion: element.descripcion,
-            recuperacion_hambre:   element.recuperacion_hambre,
-            recuperacion_sueno:    element.recuperacion_sueno,
-            recuperacion_limpieza: element.recuperacion_limpieza,
-        }
-        productos.push(tmp_producto);
+      let tmp_producto = {
+          image_Path: "/imagenes/"+element.nombre,
+          nombre    : element.nombre,
+          descripcion: element.descripcion,
+          recuperacion_hambre:   element.recuperacion_hambre,
+          recuperacion_sueno:    element.recuperacion_sueno,
+          recuperacion_limpieza: element.recuperacion_limpieza,
+      }
+      productos.push(tmp_producto);
     });
+
 });
+
 
 
 //Vencimiento del token 10 horas
@@ -69,9 +71,83 @@ app.get("/web_serverAPI.js",(req,res)=>{
     res.sendFile(path.resolve(__dirname + "/../../views/web_serverAPI.js"));
 });
 
-//Puede interesar cambiar el nombre del get y comprobar si el usuario es admin
+app.get("/perfil_tamagochi/:nombre",verificar_token,(req,res)=>{
+  let usuario = req.usuario;
+  let nombre_tamagochi = req.params.nombre;
+  if(!nombre_tamagochi){
+    return res.status(400).json({
+        ok:false,
+        err: "No has espcificado ningún nombre"
+    });
+  }
+  Usuario.findById(usuario._id,(err,UsuarioDB)=>{
+      if(err){
+          return res.status(400).json({
+              ok:false,
+              err
+          });
+      }
+      else{
+        if(UsuarioDB.tamagochis.length != 0){
+          let tamagochi = UsuarioDB.tamagochis.find(element => element.nombre ==nombre_tamagochi);
+          if(tamagochi){
+            let mis_productos = UsuarioDB.compras;
+            let real_productos = [];
+            mis_productos.forEach((item, i) => {
+              if(item!=''){
+                Producto.findOne({nombre: item},(err,productoDB)=>{
+                  if(err){
+                    console.log(err);
+                  }
+                  let product_copy ={
+                    nombre:                productoDB.nombre,
+                    image_Path:            "../imagenes/"+productoDB.nombre,
+                    descripcion:           productoDB.descripcion,
+                    recuperacion_hambre:   productoDB.recuperacion_hambre,
+                    recuperacion_sueno:    productoDB.recuperacion_sueno,
+                    recuperacion_limpieza: productoDB.recuperacion_limpieza,
+                  }
+                  real_productos.push(product_copy);
+                });
+              }
+            });
+            res.render(path.resolve(__dirname + "/../../views/Common_user/perfil_tamagochi"),{tamagochi,productos:real_productos});
+          }
+          else{
+            return res.status(400).json({
+                ok:false,
+                err: "No tienes ningún Tamagochi con ese nombre"
+            });
+          }
+        }
+        else{
+          return res.status(400).json({
+              ok:false,
+              err: "No has creado ningún Tamagochi"
+          });
+        }
+
+      }
+  });
+});
+
 app.get("/common_user",verificar_token,(req,res)=>{
-    res.render(path.resolve(__dirname + "/../../views/Common_user/common_user"),{productos});
+  let usuario = req.usuario;
+  Usuario.findById(usuario._id,(err,UsuarioDB)=>{
+      if(err){
+          return res.status(400).json({
+              ok:false,
+              err
+          });
+      }
+      else{
+            res.render(path.resolve(__dirname + "/../../views/Common_user/tamagochi"),{tamagochis: UsuarioDB.tamagochis});
+      }
+  });
+});
+//Puede interesar cambiar el nombre del get y comprobar si el usuario es admin
+app.get("/tienda",verificar_token,(req,res)=>{
+    res.render(path.resolve(__dirname + "/../../views/Common_user/tienda"),{productos});
 });
 //Sin embargo con una ruta estática es suficiente
 
@@ -83,7 +159,7 @@ app.get('/',(req,res)=>{
 });
 
 app.post('/CreateNormalUser',(req,res)=>{
-    let body = req.body;    
+    let body = req.body;
     let usuario = new Usuario({
         id:   body.id,
         pass: bcrypt.hashSync(body.pass,10),
@@ -107,7 +183,7 @@ app.post('/CreateNormalUser',(req,res)=>{
 })
 
 app.post('/CreateAdminUser',[verificar_token,verificar_admin],(req,res)=>{
-    let body = req.body;    
+    let body = req.body;
     let usuario = new Usuario({
         id:   body.id,
         pass: bcrypt.hashSync(body.pass,10),
@@ -136,7 +212,7 @@ app.post('/login',(req,res)=>{
     if(req.cookies.token_cookie){
         res.cookie("token_cookie",null);
     }
-    let body = req.body;    
+    let body = req.body;
     let usuario = new Usuario({
         id:   body.id,
         pass: body.pass,
@@ -148,7 +224,7 @@ app.post('/login',(req,res)=>{
                 ok:false,
                 err
             });
-        }   
+        }
         if(UsuarioDB_log==null){
             return res.status(400).json({
                 ok:false,
@@ -168,12 +244,12 @@ app.post('/login',(req,res)=>{
             let token = jwt.sign({
                 usuario: UsuarioDB_log
             }, process.env.SEED,{expiresIn: process.env.CADUCIDAD_TOKEN});
-            
 
-            res.cookie('token_cookie',token);  
+
+            res.cookie('token_cookie',token);
         }
         res.status(200)
-        .json({ok:true});  
+        .json({ok:true});
     });
 });
 
@@ -185,7 +261,7 @@ app.post('/BoughtProducts',verificar_token,(req,res)=>{
                 ok:false,
                 err
             });
-        }   
+        }
         else{
             return res.status(200).json({
                 ok: true,
@@ -203,7 +279,7 @@ app.post('/Buy',verificar_token,(req,res)=>{
             ok:false,
             err: "Se necesita especificar un nombre"
         });
-    }   
+    }
     let found_product = productos.find(element=> element.nombre == nombre_producto);
     if(found_product){
         Usuario.findById(usuario._id,(err,UsuarioDB)=>{
@@ -212,7 +288,7 @@ app.post('/Buy',verificar_token,(req,res)=>{
                     ok:false,
                     err
                 });
-            }   
+            }
             console.log(UsuarioDB.compras);
             let already_bought = UsuarioDB.compras.find(element => element == found_product.nombre);
             if(already_bought){
@@ -228,15 +304,15 @@ app.post('/Buy',verificar_token,(req,res)=>{
                         ok:false,
                         err
                     });
-                }   
+                }
                 else{
-                    console.log(`I should have bought ${nombre_producto} is already bought by ${usuario.id}`); 
+                    console.log(`I should have bought ${nombre_producto} is already bought by ${usuario.id}`);
                     return res.status(200).json({
                         ok:true,
                         usuario_final
                     });
                 }
-            });              
+            });
         });
     }
     else{
@@ -295,7 +371,7 @@ app.get('/imagenes/:nombre',(req,res)=>{
                 ok:false,
                 err
             });
-        }   
+        }
         if(productoDB==null){
             return res.status(400).json({
                 ok:false,
@@ -303,6 +379,7 @@ app.get('/imagenes/:nombre',(req,res)=>{
             });
         }
         res.contentType(productoDB.image_type);
+        console.log(productoDB.image);
         res.send(productoDB.image);
     });
 });
@@ -310,8 +387,8 @@ app.get('/imagenes/:nombre',(req,res)=>{
 
 //Esto es una función de ayuda no estaría en una versión final del producto
 app.post('/CreateProducto',(req,res)=>{
-    let body = req.body;    
-    let my_producto = new Producto({ 
+    let body = req.body;
+    let my_producto = new Producto({
         image:    fs.readFileSync(body.image_Path),
         image_type: body.image_type,
         nombre:   body.nombre,
@@ -334,7 +411,7 @@ app.post('/CreateProducto',(req,res)=>{
                 user: productoDB
             });
         }
-        
+
     });
 });
 
@@ -347,21 +424,21 @@ app.post('/TamagochiUsarItem',verificar_token,(req,res)=>{
             ok:false,
             err: "Se necesita especificar un nombre"
         });
-    }   
+    }
     Usuario.findById(usuario._id,(err,UsuarioDB)=>{
         if(err){
             return res.status(400).json({
                 ok:false,
                 err
             });
-        } 
-        let found_product_index = UsuarioDB.compras.findIndex(element => element == nombre_producto); 
+        }
+        let found_product_index = UsuarioDB.compras.findIndex(element => element == nombre_producto);
         if(found_product_index == -1){
             return res.status(400).json({
                 ok:false,
                 err: `El Usuario ${usuario.id} no tiene el producto ${nombre_producto}`
             });
-        } 
+        }
         let found_product       = productos.find(element => element.nombre == nombre_producto);
         let tamagochi_index = UsuarioDB.tamagochis.findIndex(element => element.nombre == nombre_tamagochi);
         if(tamagochi_index == -1){
@@ -380,15 +457,15 @@ app.post('/TamagochiUsarItem',verificar_token,(req,res)=>{
                     ok:false,
                     err
                 });
-            }   
+            }
             else{
-                console.log(`I should have added ${nombre_tamagochi} to tamagochi ${usuario.id}`); 
+                console.log(`I should have added ${nombre_tamagochi} to tamagochi ${usuario.id}`);
                 return res.status(200).json({
                     ok:true,
                     usuario_final
                 });
             }
-        });    
+        });
     });
 });
 
@@ -396,7 +473,7 @@ app.post('/TamagochiCreate',verificar_token,(req,res)=>{
     let usuario = req.usuario;
     let nombre  = req.body.nombre;
 
-    Usuario.findById(usuario._id,(err,UsuarioDB)=>{ 
+    Usuario.findById(usuario._id,(err,UsuarioDB)=>{
         if(UsuarioDB.tamagochis.find(element => element.nombre == nombre)){
             return res.status(400).json({
                 ok:false,
@@ -413,15 +490,15 @@ app.post('/TamagochiCreate',verificar_token,(req,res)=>{
                     ok:false,
                     err
                 });
-            }   
+            }
             else{
-                console.log(`I should have created ${nombre}`); 
+                console.log(`I should have created ${nombre}`);
                 return res.status(200).json({
                     ok:true,
                     usuario_final
                 });
             }
-        });  
+        });
     });
 });
 //Hay que crear productos con los nuevos stats y ya no queda casi nada
