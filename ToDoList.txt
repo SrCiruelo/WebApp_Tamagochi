@@ -1,0 +1,11 @@
+-Botón tienda desde perfil
+-Botón perfil desde tienda
+
+
+-Imagenes: como convierte de String a Buffer
+-Crear Tamagochi:
+	-Arreglar colocación del form
+-Quitar botón dar del index
+-Organizar código
+
+ACABADISIMO Y AL PORTFOLIO

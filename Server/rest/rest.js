@@ -22,6 +22,9 @@ hbs.registerPartials(path.resolve(__dirname + "/../../views/partials/"));
 hbs.registerHelper("toString",function(str){
     return "\""+str+"\"";
 });
+hbs.registerHelper("div",function(n0,div){
+    return n0/div;
+});
 var productos = [];
 
 Producto.find({},(err,results)=>{
@@ -462,7 +465,7 @@ app.post('/TamagochiUsarItem',verificar_token,(req,res)=>{
                 console.log(`I should have added ${nombre_tamagochi} to tamagochi ${usuario.id}`);
                 return res.status(200).json({
                     ok:true,
-                    usuario_final
+                    tamagochi: usuario_final.tamagochis[tamagochi_index]
                 });
             }
         });

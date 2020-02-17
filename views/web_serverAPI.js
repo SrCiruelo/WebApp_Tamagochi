@@ -1,7 +1,9 @@
 var productos;
-var login_post = ()=>{
+var login_post = (id,pass)=>{
     var xhr = new XMLHttpRequest();
+    if(!id)
     var id = document.forms["my_form"]["id"].value;
+    if(!pass)
     var pass   = document.forms["my_form"]["pass"].value;
     if(pass=="" || id=="") return false;
     let params = `id=${id}&pass=${pass}`;
@@ -10,6 +12,28 @@ var login_post = ()=>{
     {
         if(this.status == 200){
             window.location.href = "http://localhost:3000/common_user"
+        }
+        else{
+            let error = JSON.parse(this.response);
+            console.log(error.err);
+        }
+    }
+
+
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.send(params);
+}
+var register_post = ()=>{
+    var xhr = new XMLHttpRequest();
+    var id = document.forms["my_form"]["id"].value;
+    var pass   = document.forms["my_form"]["pass"].value;
+    if(pass=="" || id=="") return false;
+    let params = `id=${id}&pass=${pass}`;
+    xhr.open('POST','http://localhost:3000/CreateNormalUser',true);
+    xhr.onload = function()
+    {
+        if(this.status == 200){
+            login_post(id,pass);
         }
         else{
             let error = JSON.parse(this.response);
@@ -54,11 +78,27 @@ var set_bought = (nombre)=>{
     my_button.innerHTML = "Comprado";
 }
 
-var set_used = (nombre)=>{
+var set_used_product_inShop = (nombre)=>{
     var my_button = document.getElementById(nombre + "_button");
     my_button.classList.remove("btn-danger")
     my_button.classList.add("btn-success");
     my_button.innerHTML = "Comprar";
+}
+var set_used_product_inPerfil = (nombre,tamagochi)=>{
+    var my_button = document.getElementById(nombre + "_button");
+    var my_container = document.getElementById(nombre + "_div");
+    my_button.classList.remove("btn-success");
+    my_button.classList.add("btn-danger");
+    my_container.classList.add("fade-out");
+    var my_container = document.getElementById(nombre + "_div");
+    
+    var sueno_bar    = document.getElementById("sueno_bar");
+    var hambre_bar   = document.getElementById("hambre_bar");
+    var limpieza_bar = document.getElementById("limpieza_bar");
+
+    sueno_bar.style.width    = tamagochi.sueno/3   + "%";
+    hambre_bar.style.width   = tamagochi.hambre/3  + "%";
+    limpieza_bar.style.width = tamagochi.limpeza/3 + "%"; 
 }
 var buy = (nombre)=>{
     if(productos.find(element=>element==nombre)){
@@ -94,7 +134,9 @@ var dar_producto = (nombre_producto,nombre_tamagochi)=>{
     {
         if(this.status == 200)
         {
-            set_used(nombre_producto);
+            tamagochi = JSON.parse(this.response).tamagochi;
+            console.log(tamagochi);
+            set_used_product_inPerfil(nombre_producto,tamagochi);
             let index = productos.findIndex(element => element==nombre_producto);
             productos.splice(index,1);
         }
@@ -116,6 +158,7 @@ var CreateTamagochi = (nombre)=>{
         if(this.status == 200)
         {
             console.log(this.response);
+            window.location.href = "http://localhost:3000/common_user"
         }
         else{
             let error = JSON.parse(this.response);
@@ -130,3 +173,4 @@ var load_tienda = (nombre)=>{
   check_bought_products();
   set_bought_products();
 }
+
