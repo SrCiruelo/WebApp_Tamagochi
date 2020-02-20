@@ -33,8 +33,8 @@ var load_files = async () =>{
     delete item.__v;
     item.image = item.image.substring(12,item.image.length-1);
     item.image = Buffer.from(item.image,"utf8");
-    console.log(item.image);
-    return;
+    // console.log(item.image);
+    // return;
     let producto = new Producto(item);
     producto.save((err,productoDB)=>{
       if(err){

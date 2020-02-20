@@ -12,6 +12,8 @@
 <body onload="load_tienda()">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <!-- Header -->
+
+{{>menu_partial}}
 <header class="bg-primary text-center py-5 mb-4">
   <div class="container">
     <h1 class="font-weight-light text-white">TIENDA</h1>
@@ -20,7 +22,6 @@
 
 <!-- Page Content -->
 <div class="container">
-  <button type="button" id="crear_button"class="btn btn-success" onclick="CreateTamagochi('Blues')">Crear</button>
   <div class="row">
     {{# each productos}}
       {{> producto_tienda}}

@@ -46,7 +46,7 @@ var register_post = ()=>{
     xhr.send(params);
 }
 
-var check_bought_products = ()=>{
+var check_bought_products = (callback)=>{
     var xhr = new XMLHttpRequest();
     xhr.open('POST','http://localhost:3000/BoughtProducts',true);
     xhr.onload = function()
@@ -54,7 +54,8 @@ var check_bought_products = ()=>{
         if(this.status == 200){
             let compras = JSON.parse(this.response).compras;
             productos = compras;
-            console.log(productos);
+            if(callback)
+            callback(productos);
         }
         else{
             let error = JSON.parse(this.response);
@@ -66,6 +67,8 @@ var check_bought_products = ()=>{
 }
 
 var set_bought_products = ()=>{
+  if(productos.length==0)return;
+
   productos.forEach(element => {
       set_bought(element);
   });
@@ -91,14 +94,17 @@ var set_used_product_inPerfil = (nombre,tamagochi)=>{
     my_button.classList.add("btn-danger");
     my_container.classList.add("fade-out");
     var my_container = document.getElementById(nombre + "_div");
-    
+
     var sueno_bar    = document.getElementById("sueno_bar");
     var hambre_bar   = document.getElementById("hambre_bar");
     var limpieza_bar = document.getElementById("limpieza_bar");
 
     sueno_bar.style.width    = tamagochi.sueno/3   + "%";
+    sueno_bar.setAttribute("aria-valuenow",tamagochi.sueno.toString(10));
     hambre_bar.style.width   = tamagochi.hambre/3  + "%";
-    limpieza_bar.style.width = tamagochi.limpeza/3 + "%"; 
+    hambre_bar.setAttribute("aria-valuenow",tamagochi.hambre.toString(10));
+    limpieza_bar.style.width = tamagochi.limpeza/3 + "%";
+    limpieza_bar.setAttribute("aria-valuenow",tamagochi.limpieza.toString(10));
 }
 var buy = (nombre)=>{
     if(productos.find(element=>element==nombre)){
@@ -170,7 +176,5 @@ var CreateTamagochi = (nombre)=>{
 }
 
 var load_tienda = (nombre)=>{
-  check_bought_products();
-  set_bought_products();
+  check_bought_products(set_bought_products);
 }
-

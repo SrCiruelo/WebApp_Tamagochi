@@ -1,11 +1,13 @@
--Botón tienda desde perfil
--Botón perfil desde tienda
+-AÃ±adir Referencias a los productos y cambiar cÃ³digo
+https://mongoosejs.com/docs/populate.html
 
+en el schema usuario
+[{ type: Schema.Types.ObjectId, ref: 'Producto' }]
 
 -Imagenes: como convierte de String a Buffer
 -Crear Tamagochi:
-	-Arreglar colocación del form
--Quitar botón dar del index
--Organizar código
+	-Arreglar colocaciï¿½n del form
+-Quitar botï¿½n dar del index
+-Organizar cï¿½digo
 
 ACABADISIMO Y AL PORTFOLIO

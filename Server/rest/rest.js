@@ -144,13 +144,13 @@ app.get("/common_user",verificar_token,(req,res)=>{
           });
       }
       else{
-            res.render(path.resolve(__dirname + "/../../views/Common_user/tamagochi"),{tamagochis: UsuarioDB.tamagochis});
+            res.render(path.resolve(__dirname + "/../../views/Common_user/tamagochi"),{Common_user:true,tamagochis: UsuarioDB.tamagochis});
       }
   });
 });
 //Puede interesar cambiar el nombre del get y comprobar si el usuario es admin
 app.get("/tienda",verificar_token,(req,res)=>{
-    res.render(path.resolve(__dirname + "/../../views/Common_user/tienda"),{productos});
+    res.render(path.resolve(__dirname + "/../../views/Common_user/tienda"),{Tienda:true,productos});
 });
 //Sin embargo con una ruta estática es suficiente
 
@@ -382,7 +382,7 @@ app.get('/imagenes/:nombre',(req,res)=>{
             });
         }
         res.contentType(productoDB.image_type);
-        console.log(productoDB.image);
+        //console.log(productoDB.image);
         res.send(productoDB.image);
     });
 });

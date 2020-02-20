@@ -12,6 +12,7 @@
 <body>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <!-- Header -->
+{{>menu_partial}}
 <header class="bg-primary text-center py-5 mb-4">
   <div class="container">
     <h1 class="font-weight-light text-white">TUS TAMAGOCHI</h1>
@@ -21,7 +22,7 @@
 <!-- Page Content -->
 
 <div class="container">
-  
+
   <div class="row">
     <div class=" col-xl-3 col-md-6 mb-4  " id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <div class="card border-0 shadow">
@@ -35,7 +36,7 @@
           <label for="fname">Nombre Tamagochi</label><br>
           <input type="text" id="fname" name="nombre" value="John"><br>
           <input type="submit" value="Crear" onclick='CreateTamagochi(document.forms["my_form"]["nombre"].value)'>
-        </form> 
+        </form>
       </div>
     </div>
     {{# each tamagochis}}
@@ -51,9 +52,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 <script>
-  document.getElementById("my_dropDown").addEventListener('click', function (event) { 
-            event.stopPropagation(); 
-  }); 
+  document.getElementById("my_dropDown").addEventListener('click', function (event) {
+            event.stopPropagation();
+  });
 </script>
 <style>
 .form-control-borderless {
